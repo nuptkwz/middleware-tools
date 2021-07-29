@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Middleware-Tools.iml" filepath="$PROJECT_DIR$/.idea/Middleware-Tools.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-characteristic/spring-characteristic.iml" filepath="$PROJECT_DIR$/spring-characteristic/spring-characteristic.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-es/springboot-es.iml" filepath="$PROJECT_DIR$/springboot-es/springboot-es.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-mongo(single)/springboot-mongo.iml" filepath="$PROJECT_DIR$/springboot-mongo(single)/springboot-mongo.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,9 @@
+spring:
+  data:
+    mongodb:
+      #主机地址
+      host: 192.168.30.129
+      database: article
+      port: 27017
+      #uri方式
+      # uri: mongodb://192.168.30.129/article
