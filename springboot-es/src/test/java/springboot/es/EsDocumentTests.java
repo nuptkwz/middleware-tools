@@ -25,6 +25,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.FetchSourceContext;
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -141,10 +142,15 @@ class EsDocumentTests {
     //查询常量
     @Test
     void testSearch() throws IOException {
+        //SearchRequest:搜索条件
         SearchRequest searchRequest = new SearchRequest("kwz_index");
-        //构建搜索条件,通过Builder构造器去构建
+        //SearchSourceBuilder：构建搜索条件,通过Builder构造器去构建
+        //HighlightBuilder:构建高亮
+        //MatchAllQueryBuilder:
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(
+                //通过QueryBuilders进行查询条件的构建，termQuery：精确匹配、matchAllQuery:匹配所有
+//                QueryBuilders.matchAllQuery()
                 QueryBuilders.termQuery("name", "name3")
         );
         searchSourceBuilder.timeout(new TimeValue(60, TimeUnit.SECONDS));
