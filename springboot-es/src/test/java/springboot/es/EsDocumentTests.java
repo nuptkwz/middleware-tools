@@ -11,6 +11,8 @@ import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.support.master.AcknowledgedResponse;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
@@ -18,6 +20,10 @@ import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.FetchSourceContext;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +31,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import springboot.es.pojo.User;
 
+import javax.naming.directory.SearchResult;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * es 7.6.x 文档 api讲解和学习
@@ -109,7 +117,7 @@ class EsDocumentTests {
         System.out.println(deleteResponse.status());
     }
 
-    //批量导入数据
+    //批量操作数据
     @Test
     void testBulkRequest() throws IOException {
         BulkRequest bulkRequest = new BulkRequest();
@@ -119,6 +127,7 @@ class EsDocumentTests {
         //批处理请求
         for (int i = 0; i < 5; i++) {
             User currentUser = new User("name" + i, age + i);
+            //DeleteRequest:删除请求    UpdateRequest：更新请求
             bulkRequest.add(
                     new IndexRequest("kwz_index").id("" + (i + 1)).source(JSON.toJSONString(currentUser), XContentType.JSON)
             );
@@ -127,5 +136,26 @@ class EsDocumentTests {
         BulkResponse bulkResponse = client.bulk(bulkRequest, RequestOptions.DEFAULT);
         System.out.println(bulkResponse.status());
         System.out.println(bulkResponse.hasFailures());
+    }
+
+    //查询常量
+    @Test
+    void testSearch() throws IOException {
+        SearchRequest searchRequest = new SearchRequest("kwz_index");
+        //构建搜索条件,通过Builder构造器去构建
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.query(
+                QueryBuilders.termQuery("name", "name3")
+        );
+        searchSourceBuilder.timeout(new TimeValue(60, TimeUnit.SECONDS));
+        //通过.source方法封装参数
+        searchRequest.source(searchSourceBuilder);
+        SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+        System.out.println(JSON.toJSONString(searchResponse.getHits()));
+
+        SearchHit[] hits = searchResponse.getHits().getHits();
+        for (SearchHit hit : hits) {
+            System.out.println("score:" + hit.getScore() + ", sourceAsMap:" + hit.getSourceAsMap());
+        }
     }
 }
