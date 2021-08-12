@@ -31,7 +31,7 @@ class EsIndexTests {
     @Test
     void testCreateIndex() throws IOException {
         //1.创建索引请求
-        CreateIndexRequest createIndexRequest = new CreateIndexRequest("kwz_index");
+        CreateIndexRequest createIndexRequest = new CreateIndexRequest("jd_books");
         //2.客户端执行请求,返回响应
         CreateIndexResponse createIndexResponse = client.indices().create(createIndexRequest, RequestOptions.DEFAULT);
         System.out.println(createIndexResponse.toString());

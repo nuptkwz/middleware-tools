@@ -22,6 +22,8 @@ import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.reindex.BulkByScrollResponse;
+import org.elasticsearch.index.reindex.DeleteByQueryRequest;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.FetchSourceContext;
@@ -116,6 +118,19 @@ class EsDocumentTests {
 
         DeleteResponse deleteResponse = client.delete(deleteRequest, RequestOptions.DEFAULT);
         System.out.println(deleteResponse.status());
+    }
+
+    @Test
+    void testDeleteByQuery() throws IOException {
+        DeleteByQueryRequest deleteByQueryRequest = new DeleteByQueryRequest("kwz_index")
+                .setTimeout(TimeValue.timeValueSeconds(60));
+        deleteByQueryRequest.setQuery(
+                QueryBuilders.boolQuery().must(
+                        QueryBuilders.termQuery("name", "name0")
+                )
+        );
+        BulkByScrollResponse bulkByScrollResponse = client.deleteByQuery(deleteByQueryRequest, RequestOptions.DEFAULT);
+        System.out.println(bulkByScrollResponse);
     }
 
     //批量操作数据
