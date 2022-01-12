@@ -19,6 +19,8 @@ import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.unit.TimeValue;
+import org.elasticsearch.common.xcontent.XContentBuilder;
+import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -109,6 +111,24 @@ class EsDocumentTests {
         UpdateResponse updateResponse = client.update(updateRequest, RequestOptions.DEFAULT);
         System.out.println(updateResponse.status());
         System.out.println(updateResponse);
+    }
+
+    @Test
+    void testUpdateManDocument() throws IOException {
+        BulkRequest request = new BulkRequest();
+        request.add(getUpdateRequest());
+        BulkResponse bulk = client.bulk(request, RequestOptions.DEFAULT);
+        System.out.println(bulk);
+    }
+
+    private UpdateRequest getUpdateRequest() throws IOException {
+        XContentBuilder builder = XContentFactory.jsonBuilder()
+                .startObject()
+                .field("age")
+                .value("25").endObject();
+        UpdateRequest request = new UpdateRequest("kwz_index", "11")
+                .doc(builder);
+        return request;
     }
 
     @Test
