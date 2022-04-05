@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: springboot-kafka
+  kafka:
+    bootstrap-servers: 192.168.30.130:9092
+    producer:
+      # 序列化key的类
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # 序列化value的类
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        partitioner:
+          # 指定分区规则
+          class: com.engrz.lab.springboot.kafka.CustomPartitioner
+        spring:
+          json:
+            value:
+              default:
+                type:
+            trusted:
+              # 允许json反序列化的包
+              packages: com.engrz.lab.*
+            add:
+              type:
+                headers: false
+    consumer:
+      #bootstrap-servers: 192.168.30.130:9092 # 会覆盖 spring.kafka.bootstrap-servers 配置
+      # 消费者所属消息组
+      group-id: group_1
+      # 反序列化key的类
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      # 反序列化value的类
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+    template:
+      default-topic: kwz_1

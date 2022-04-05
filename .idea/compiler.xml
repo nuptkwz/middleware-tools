@@ -9,12 +9,15 @@
         <module name="springboot-mongo" />
         <module name="spring-characteristic" />
         <module name="springboot-es" />
+        <module name="springboot-kafka" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="GameDemo" target="1.8" />
       <module name="spring-characteristic" target="1.8" />
       <module name="springboot-es" target="1.8" />
+      <module name="springboot-kafka" target="1.8" />
+      <module name="springboot-kafka (1)" target="1.8" />
       <module name="springboot-mongo" target="1.8" />
     </bytecodeTargetLevel>
   </component>
@@ -23,6 +26,8 @@
       <module name="GameDemo" options="-parameters" />
       <module name="spring-characteristic" options="-parameters" />
       <module name="springboot-es" options="-parameters" />
+      <module name="springboot-kafka" options="-parameters" />
+      <module name="springboot-kafka (1)" options="-parameters" />
       <module name="springboot-mongo" options="-parameters" />
     </option>
   </component>

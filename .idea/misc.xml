@@ -12,6 +12,8 @@
         <option value="$PROJECT_DIR$/springboot-mongo(single)/pom.xml" />
         <option value="$PROJECT_DIR$/springboot-es/pom.xml" />
         <option value="$PROJECT_DIR$/springboot-es(single)/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-kafka/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-kafka(single)/pom.xml" />
       </list>
     </option>
   </component>
