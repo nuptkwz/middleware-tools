@@ -1,5 +1,6 @@
 package com.kwz.springboot;
 
+import com.kwz.springboot.kafka.component.Producer;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
